@@ -1,6 +1,7 @@
 import React from 'react';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'accent' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
@@ -23,17 +24,23 @@ export const Button: React.FC<ButtonProps> = ({
     alignItems: 'center',
     justifyContent: 'center',
     gap: '8px',
-    fontWeight: 500,
+    fontWeight: 600,
     borderRadius: 'var(--radius-md)',
-    transition: 'all 0.16s ease',
+    border: '1px solid transparent',
+    transition:
+      'background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease',
     userSelect: 'none',
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.55 : 1,
     width: fullWidth ? '100%' : 'auto',
     textAlign: 'center',
+    whiteSpace: 'nowrap',
   };
 
-  const sizeStyles: Record<'sm' | 'md' | 'lg', React.CSSProperties> = {
+  const sizeStyles: Record<
+    'sm' | 'md' | 'lg',
+    React.CSSProperties
+  > = {
     sm: {
       padding: '8px 14px',
       fontSize: '0.85rem',
@@ -59,14 +66,13 @@ export const Button: React.FC<ButtonProps> = ({
           backgroundColor: 'var(--button)',
           color: 'var(--button-text)',
           boxShadow: 'var(--shadow-sm)',
-          fontWeight: 600,
         };
 
       case 'secondary':
         return {
           backgroundColor: 'var(--surface-subtle)',
           color: 'var(--text-primary)',
-          border: '1px solid var(--border)',
+          borderColor: 'var(--border)',
         };
 
       case 'accent':
@@ -74,14 +80,13 @@ export const Button: React.FC<ButtonProps> = ({
           backgroundColor: 'var(--accent)',
           color: 'var(--button-text)',
           boxShadow: 'var(--shadow-sm)',
-          fontWeight: 600,
         };
 
       case 'outline':
         return {
           backgroundColor: 'transparent',
-          color: 'var(--accent)',
-          border: '1.5px solid var(--accent)',
+          color: 'var(--accent-strong)',
+          borderColor: 'var(--accent)',
         };
 
       case 'ghost':
@@ -94,6 +99,7 @@ export const Button: React.FC<ButtonProps> = ({
         return {
           backgroundColor: 'color-mix(in srgb, var(--danger) 15%, transparent)',
           color: 'var(--danger)',
+          borderColor: 'color-mix(in srgb, var(--danger) 25%, transparent)',
         };
 
       default:
@@ -114,10 +120,18 @@ export const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       {icon && (
-        <span style={{ display: 'flex', alignItems: 'center' }}>
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}
+        >
           {icon}
         </span>
       )}
+
       {children}
     </button>
   );
