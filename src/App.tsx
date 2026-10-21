@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
-import { ChildProvider } from './context/ChildContext';
+import { ChildProvider, useChild } from './context/ChildContext';
 import { MomentProvider } from './context/MomentContext';
 import { AppShell } from './components/layout/AppShell';
 import { NavTab } from './components/layout/BottomNav';
@@ -8,9 +8,34 @@ import { DashboardView } from './views/DashboardView';
 import { JourneyView } from './views/JourneyView';
 import { TimelineView } from './views/TimelineView';
 import { SettingsView } from './views/SettingsView';
+import { ChildSetup } from './components/onboarding/ChildSetup';
 
 const AppContent: React.FC = () => {
+  const { children, loading } = useChild();
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
+
+  // Wait until we know whether the user has a child set up.
+  if (loading) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'var(--background)',
+          color: 'var(--text-primary)',
+        }}
+      >
+        Loading…
+      </div>
+    );
+  }
+
+  // First-time users need to create their child before seeing the journal.
+  if (children.length === 0) {
+    return <ChildSetup />;
+  }
 
   const renderActiveView = () => {
     switch (activeTab) {
