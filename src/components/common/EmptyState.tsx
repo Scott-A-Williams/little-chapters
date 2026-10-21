@@ -25,11 +25,12 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '36px 20px',
+        padding: '40px 22px',
         textAlign: 'center',
         borderRadius: 'var(--radius-xl)',
-        backgroundColor: 'var(--lc-surface-card)',
-        border: '1.5px dashed var(--lc-border)',
+        backgroundColor: 'var(--surface-elevated)',
+        border: '1px dashed var(--border)',
+        boxShadow: 'var(--shadow-sm)',
         margin: '16px 0',
       }}
       className="animate-fade-in"
@@ -37,15 +38,15 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       {icon && (
         <div
           style={{
-            width: '56px',
-            height: '56px',
-            borderRadius: '50%',
-            backgroundColor: 'var(--lc-surface-muted)',
+            width: '58px',
+            height: '58px',
+            borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--accent-soft)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginBottom: '14px',
-            color: 'var(--lc-secondary)',
+            marginBottom: '16px',
+            color: 'var(--accent-strong)',
           }}
         >
           {icon}
@@ -54,11 +55,13 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 
       <h3
         style={{
-          fontFamily: 'var(--font-serif)',
-          fontSize: '1.2rem',
-          fontWeight: 600,
-          color: 'var(--lc-text-primary)',
-          marginBottom: '6px',
+          fontFamily: 'var(--font-heading)',
+          fontSize: '1.25rem',
+          fontWeight: 500,
+          lineHeight: 1.3,
+          letterSpacing: '-0.01em',
+          color: 'var(--text-primary)',
+          marginBottom: '7px',
         }}
       >
         {title}
@@ -67,17 +70,22 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <p
         style={{
           fontSize: '0.92rem',
-          color: 'var(--lc-text-secondary)',
-          maxWidth: '320px',
-          lineHeight: 1.45,
-          marginBottom: actionLabel ? '20px' : '0px',
+          color: 'var(--text-secondary)',
+          maxWidth: '330px',
+          lineHeight: 1.5,
+          marginBottom: actionLabel ? '20px' : '0',
         }}
       >
         {description}
       </p>
 
       {actionLabel && onAction && (
-        <Button variant="accent" size="md" icon={actionIcon} onClick={onAction}>
+        <Button
+          variant="accent"
+          size="md"
+          icon={actionIcon}
+          onClick={onAction}
+        >
           {actionLabel}
         </Button>
       )}
