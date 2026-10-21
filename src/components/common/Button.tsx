@@ -70,7 +70,7 @@ export const Button: React.FC<ButtonProps> = ({
         return {
           backgroundColor: 'var(--lc-secondary)',
           color: '#FFFFFF',
-          boxShadow: '0 3px 10px rgba(0, 155, 193, 0.25)',
+          boxShadow: '0 3px 10px color-mix(in srgb, var(--lc-secondary) 25%, transparent)',
         };
       case 'outline':
         return {

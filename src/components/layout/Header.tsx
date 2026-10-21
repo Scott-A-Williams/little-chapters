@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useChild } from '../../context/ChildContext';
 import { useMoments } from '../../context/MomentContext';
-import { ChevronDown, Plus, Sparkles, Check, UserPlus } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { ChevronDown, Plus, Sparkles, Check, UserPlus, Palette } from 'lucide-react';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 
 export const Header: React.FC = () => {
   const { activeChild, children, setActiveChildId, addChild } = useChild();
   const { feedbackMessage } = useMoments();
+  const { themeName, availableThemes, openLookSetup } = useTheme();
+
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isAddChildOpen, setIsAddChildOpen] = useState<boolean>(false);
   const [newChildName, setNewChildName] = useState<string>('');
@@ -50,6 +53,8 @@ export const Header: React.FC = () => {
     setIsAddChildOpen(false);
     setIsDropdownOpen(false);
   };
+
+  const currentTheme = availableThemes[themeName];
 
   return (
     <>
@@ -243,36 +248,90 @@ export const Header: React.FC = () => {
                     <Plus size={16} />
                     <span>Add Another Child</span>
                   </button>
+
+                  <button
+                    onClick={() => {
+                      setIsDropdownOpen(false);
+                      openLookSetup();
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      width: '100%',
+                      padding: '8px 12px',
+                      borderRadius: 'var(--radius-md)',
+                      color: 'var(--lc-text-secondary)',
+                      fontSize: '0.85rem',
+                      fontWeight: 600,
+                    }}
+                  >
+                    <Palette size={16} />
+                    <span>Personalise Look...</span>
+                  </button>
                 </div>
               </div>
             )}
           </div>
 
-          {/* App Title / Brand */}
-          <div style={{ textAlign: 'right' }}>
-            <div
+          {/* Quick Look Pill & App Brand */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {/* Quick Look Customiser Pill */}
+            <button
+              onClick={openLookSetup}
+              title="Personalise your look"
+              aria-label="Choose look"
               style={{
-                fontFamily: 'var(--font-serif)',
-                fontWeight: 600,
-                fontSize: '1.05rem',
-                color: 'var(--lc-primary)',
-                letterSpacing: '-0.01em',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
+                gap: '6px',
+                padding: '6px 10px',
+                borderRadius: 'var(--radius-full)',
+                backgroundColor: 'var(--lc-surface)',
+                border: '1px solid var(--lc-border)',
+                boxShadow: 'var(--shadow-sm)',
+                fontSize: '0.76rem',
+                fontWeight: 600,
+                color: 'var(--lc-text-primary)',
               }}
             >
-              <span>Little Chapters</span>
-              <Sparkles size={13} color="var(--lc-secondary)" />
-            </div>
-            <div
-              style={{
-                fontSize: '0.68rem',
-                color: 'var(--lc-text-muted)',
-                letterSpacing: '0.02em',
-              }}
-            >
-              Calm Family Journal
+              <div
+                style={{
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--lc-primary)',
+                }}
+              />
+              <span>{currentTheme?.name.split('—')[0].trim()}</span>
+            </button>
+
+            {/* Brand Title */}
+            <div style={{ textAlign: 'right' }}>
+              <div
+                style={{
+                  fontFamily: 'var(--font-serif)',
+                  fontWeight: 600,
+                  fontSize: '1.02rem',
+                  color: 'var(--lc-primary)',
+                  letterSpacing: '-0.01em',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
+                <span>Little Chapters</span>
+                <Sparkles size={12} color="var(--lc-secondary)" />
+              </div>
+              <div
+                style={{
+                  fontSize: '0.68rem',
+                  color: 'var(--lc-text-muted)',
+                  letterSpacing: '0.02em',
+                }}
+              >
+                Family Journal
+              </div>
             </div>
           </div>
         </div>

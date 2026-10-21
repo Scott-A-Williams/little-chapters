@@ -1,4 +1,4 @@
-export type ThemeName = 'default' | 'sage' | 'peach' | 'lavender' | 'ocean';
+export type ThemeName = 'blue' | 'pink' | 'brown' | 'green';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 
@@ -25,11 +25,14 @@ export interface ThemeColors {
 export interface PaletteDefinition {
   id: ThemeName;
   name: string;
+  subtitle: string;
   description: string;
   preview: {
     primary: string;
     secondary: string;
     background: string;
+    surfaceCard: string;
+    textPrimary: string;
   };
   light: ThemeColors;
   dark: ThemeColors;

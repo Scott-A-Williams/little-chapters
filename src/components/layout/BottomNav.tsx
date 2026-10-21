@@ -102,7 +102,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) 
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 6px 18px rgba(0, 155, 193, 0.38)',
+              boxShadow: '0 6px 18px color-mix(in srgb, var(--lc-secondary) 38%, transparent)',
               border: '3px solid var(--lc-surface)',
               transition: 'transform 0.16s ease',
             }}

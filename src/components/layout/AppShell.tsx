@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from './Header';
 import { BottomNav, NavTab } from './BottomNav';
 import { QuickLogModal } from '../moment/QuickLogModal';
+import { ChooseLookModal } from '../onboarding/ChooseLookModal';
 
 interface AppShellProps {
   activeTab: NavTab;
@@ -40,6 +41,9 @@ export const AppShell: React.FC<AppShellProps> = ({ activeTab, onTabChange, chil
 
       {/* 1-Tap Quick Log Modal */}
       <QuickLogModal />
+
+      {/* Onboarding / Setup "Choose Your Look" Modal */}
+      <ChooseLookModal />
     </div>
   );
 };
