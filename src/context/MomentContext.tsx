@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import { Moment, MomentCategory } from '../types/moment';
 import { momentService, MomentFilter } from '../services/momentService';
 import { useChild } from './ChildContext';
@@ -8,53 +14,66 @@ interface MomentContextValue {
   loading: boolean;
   filter: MomentFilter;
   setFilter: (updates: Partial<MomentFilter>) => void;
-  addMoment: (moment: Omit<Moment, 'id' | 'createdAt' | 'updatedAt'>) => Promise<Moment>;
+  addMoment: (
+    moment: Omit<Moment, 'id' | 'createdAt' | 'updatedAt'>
+  ) => Promise<Moment>;
   updateMoment: (id: string, updates: Partial<Moment>) => Promise<Moment>;
   deleteMoment: (id: string) => Promise<void>;
-  // Quick Log modal state
+
   isQuickLogOpen: boolean;
   openQuickLog: (preselectCategory?: MomentCategory) => void;
   closeQuickLog: () => void;
   preselectedCategory?: MomentCategory;
-  // User feedback toast/alert
+
   feedbackMessage: string | null;
   showFeedback: (msg: string) => void;
-  // Demo / reset
+
   resetDemoData: () => Promise<void>;
   refreshMoments: () => Promise<void>;
 }
 
 const MomentContext = createContext<MomentContextValue | undefined>(undefined);
 
-export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { activeChildId } = useChild();
+
   const [moments, setMoments] = useState<Moment[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
+
   const [filter, setFilterState] = useState<MomentFilter>({
     category: 'all',
     searchQuery: '',
   });
 
-  const [isQuickLogOpen, setIsQuickLogOpen] = useState<boolean>(false);
-  const [preselectedCategory, setPreselectedCategory] = useState<MomentCategory | undefined>(undefined);
+  const [isQuickLogOpen, setIsQuickLogOpen] = useState(false);
+  const [preselectedCategory, setPreselectedCategory] =
+    useState<MomentCategory | undefined>(undefined);
+
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const showFeedback = useCallback((msg: string) => {
     setFeedbackMessage(msg);
+
     setTimeout(() => {
-      setFeedbackMessage((current) => (current === msg ? null : current));
+      setFeedbackMessage((current) =>
+        current === msg ? null : current
+      );
     }, 3200);
   }, []);
 
   const loadMoments = useCallback(async () => {
     try {
       setLoading(true);
+
       const data = await momentService.getMoments({
         childId: activeChildId || undefined,
         category: filter.category,
         searchQuery: filter.searchQuery,
         tag: filter.tag,
       });
+
       setMoments(data);
     } finally {
       setLoading(false);
@@ -66,7 +85,10 @@ export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, [loadMoments]);
 
   const setFilter = (updates: Partial<MomentFilter>) => {
-    setFilterState((prev) => ({ ...prev, ...updates }));
+    setFilterState((prev) => ({
+      ...prev,
+      ...updates,
+    }));
   };
 
   const addMoment = async (
@@ -76,21 +98,38 @@ export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       ...momentData,
       childId: momentData.childId || activeChildId,
     });
+
     setMoments((prev) => [created, ...prev]);
+
     showFeedback(`Saved moment: "${created.title}"`);
+
     return created;
   };
 
-  const updateMoment = async (id: string, updates: Partial<Moment>): Promise<Moment> => {
+  const updateMoment = async (
+    id: string,
+    updates: Partial<Moment>
+  ): Promise<Moment> => {
     const updated = await momentService.updateMoment(id, updates);
-    setMoments((prev) => prev.map((m) => (m.id === id ? updated : m)));
+
+    setMoments((prev) =>
+      prev.map((moment) =>
+        moment.id === id ? updated : moment
+      )
+    );
+
     showFeedback(`Updated moment: "${updated.title}"`);
+
     return updated;
   };
 
   const deleteMoment = async (id: string): Promise<void> => {
     await momentService.deleteMoment(id);
-    setMoments((prev) => prev.filter((m) => m.id !== id));
+
+    setMoments((prev) =>
+      prev.filter((moment) => moment.id !== id)
+    );
+
     showFeedback('Moment removed');
   };
 
@@ -137,8 +176,12 @@ export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
 export const useMoments = (): MomentContextValue => {
   const context = useContext(MomentContext);
+
   if (!context) {
-    throw new Error('useMoments must be used within a MomentProvider');
+    throw new Error(
+      'useMoments must be used within a MomentProvider'
+    );
   }
+
   return context;
 };
