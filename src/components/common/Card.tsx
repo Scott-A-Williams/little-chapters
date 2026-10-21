@@ -15,11 +15,22 @@ export const Card: React.FC<CardProps> = ({
   style,
   ...props
 }) => {
-  const paddingStyles: Record<'none' | 'sm' | 'md' | 'lg', React.CSSProperties> = {
-    none: { padding: '0px' },
-    sm: { padding: '12px 14px' },
-    md: { padding: '16px 18px' },
-    lg: { padding: '20px 22px' },
+  const paddingStyles: Record<
+    'none' | 'sm' | 'md' | 'lg',
+    React.CSSProperties
+  > = {
+    none: {
+      padding: '0',
+    },
+    sm: {
+      padding: '12px 14px',
+    },
+    md: {
+      padding: '16px 18px',
+    },
+    lg: {
+      padding: '20px 22px',
+    },
   };
 
   const getVariantStyles = (): React.CSSProperties => {
@@ -30,27 +41,35 @@ export const Card: React.FC<CardProps> = ({
           border: '1px solid var(--border)',
           boxShadow: 'var(--shadow-sm)',
         };
+
       case 'elevated':
         return {
           backgroundColor: 'var(--surface-elevated)',
           border: '1px solid var(--border)',
           boxShadow: 'var(--shadow-md)',
         };
+
       case 'muted':
         return {
           backgroundColor: 'var(--surface-subtle)',
           border: '1px solid var(--border-subtle)',
+          boxShadow: 'none',
         };
+
       case 'accent':
         return {
-          backgroundColor: 'var(--surface-elevated)',
+          backgroundColor: 'var(--accent-soft)',
           border: '1px solid var(--accent)',
+          boxShadow: 'none',
         };
+
       case 'flat':
         return {
           backgroundColor: 'transparent',
           border: '1px solid var(--border)',
+          boxShadow: 'none',
         };
+
       default:
         return {};
     }
@@ -59,14 +78,16 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       style={{
+        width: '100%',
         borderRadius: 'var(--radius-lg)',
-        transition: 'border-color 0.16s ease, background-color 0.16s ease',
+        transition:
+          'border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease',
         cursor: interactive ? 'pointer' : 'default',
         ...paddingStyles[padding],
         ...getVariantStyles(),
         ...style,
       }}
-      className={`lc-card ${className}`}
+      className={`lc-card ${interactive ? 'lc-card-interactive' : ''} ${className}`}
       {...props}
     >
       {children}
