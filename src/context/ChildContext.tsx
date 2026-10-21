@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import { Child } from '../types/child';
 import { childService } from '../services/childService';
 
@@ -13,6 +19,7 @@ interface ChildContextValue {
   updateChild: (id: string, updates: Partial<Child>) => Promise<Child>;
   loading: boolean;
   refreshChildren: () => Promise<void>;
+  needsSetup: boolean;
 }
 
 const ChildContext = createContext<ChildContextValue | undefined>(undefined);
@@ -31,11 +38,16 @@ export const ChildProvider: React.FC<{ children: React.ReactNode }> = ({
       const kids = await childService.getChildren();
       setChildrenList(kids);
 
+      if (kids.length === 0) {
+        setActiveChildIdState('');
+        return;
+      }
+
       const activeId = await childService.getActiveChildId();
 
       if (activeId && kids.some((child) => child.id === activeId)) {
         setActiveChildIdState(activeId);
-      } else if (kids.length > 0) {
+      } else {
         const firstChildId = kids[0].id;
         setActiveChildIdState(firstChildId);
         await childService.setActiveChildId(firstChildId);
@@ -61,7 +73,9 @@ export const ChildProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const newChild: Child = {
       ...childData,
-      id: `child_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: `child_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(2, 6)}`,
       createdAt: now,
       updatedAt: now,
     };
@@ -101,8 +115,9 @@ export const ChildProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const activeChild =
     childrenList.find((child) => child.id === activeChildId) ||
-    childrenList[0] ||
     null;
+
+  const needsSetup = !loading && childrenList.length === 0;
 
   return (
     <ChildContext.Provider
@@ -115,6 +130,7 @@ export const ChildProvider: React.FC<{ children: React.ReactNode }> = ({
         updateChild,
         loading,
         refreshChildren: loadData,
+        needsSetup,
       }}
     >
       {reactChildren}
