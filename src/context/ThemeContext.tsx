@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { ThemeName, ThemeMode, ThemeColors } from '../types/theme';
 import { THEME_PALETTES, DEFAULT_THEME } from '../themes/palettes';
 
@@ -10,7 +16,7 @@ interface ThemeContextValue {
   setThemeName: (name: ThemeName) => void;
   setMode: (mode: ThemeMode) => void;
   availableThemes: typeof THEME_PALETTES;
-  // Onboarding "Choose your look" step state
+
   isLookSetupOpen: boolean;
   hasCompletedLookSetup: boolean;
   openLookSetup: () => void;
@@ -24,23 +30,30 @@ const THEME_STORAGE_KEY = 'lc_theme_name_v2';
 const MODE_STORAGE_KEY = 'lc_theme_mode_v2';
 const LOOK_SETUP_COMPLETED_KEY = 'lc_look_setup_completed_v2';
 
-// Normalize older theme names if previously stored
 function normalizeThemeName(raw: string | null): ThemeName {
   if (!raw) return DEFAULT_THEME;
+
   if (raw === 'blue' || raw === 'pink' || raw === 'brown' || raw === 'green') {
     return raw as ThemeName;
   }
+
   if (raw === 'default' || raw === 'ocean') return 'blue';
   if (raw === 'sage') return 'green';
   if (raw === 'peach') return 'brown';
   if (raw === 'lavender') return 'pink';
+
   return DEFAULT_THEME;
 }
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [themeName, setThemeNameState] = useState<ThemeName>(() => {
     try {
-      const saved = localStorage.getItem(THEME_STORAGE_KEY) || localStorage.getItem('lc_theme_name_v1');
+      const saved =
+        localStorage.getItem(THEME_STORAGE_KEY) ||
+        localStorage.getItem('lc_theme_name_v1');
+
       return normalizeThemeName(saved);
     } catch {
       return DEFAULT_THEME;
@@ -49,8 +62,14 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [mode, setModeState] = useState<ThemeMode>(() => {
     try {
-      const saved = (localStorage.getItem(MODE_STORAGE_KEY) || localStorage.getItem('lc_theme_mode_v1')) as ThemeMode | null;
-      return saved && ['light', 'dark', 'system'].includes(saved) ? saved : 'system';
+      const saved = (
+        localStorage.getItem(MODE_STORAGE_KEY) ||
+        localStorage.getItem('lc_theme_mode_v1')
+      ) as ThemeMode | null;
+
+      return saved && ['light', 'dark', 'system'].includes(saved)
+        ? saved
+        : 'system';
     } catch {
       return 'system';
     }
@@ -58,17 +77,18 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [systemPrefersDark, setSystemPrefersDark] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false;
+
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
-  // Track whether "Choose your look" setup was previously completed/dismissed
-  const [hasCompletedLookSetup, setHasCompletedLookSetup] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem(LOOK_SETUP_COMPLETED_KEY) === 'true';
-    } catch {
-      return false;
-    }
-  });
+  const [hasCompletedLookSetup, setHasCompletedLookSetup] =
+    useState<boolean>(() => {
+      try {
+        return localStorage.getItem(LOOK_SETUP_COMPLETED_KEY) === 'true';
+      } catch {
+        return false;
+      }
+    });
 
   const [isLookSetupOpen, setIsLookSetupOpen] = useState<boolean>(() => {
     try {
@@ -78,74 +98,108 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   });
 
-  // Listen to OS dark/light mode preference changes
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = (e: MediaQueryListEvent) => setSystemPrefersDark(e.matches);
+
+    const handler = (event: MediaQueryListEvent) => {
+      setSystemPrefersDark(event.matches);
+    };
+
     mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handler);
+    };
   }, []);
 
   const resolvedMode: 'light' | 'dark' = useMemo(() => {
     if (mode === 'system') {
       return systemPrefersDark ? 'dark' : 'light';
     }
+
     return mode;
   }, [mode, systemPrefersDark]);
 
-  const palette = THEME_PALETTES[themeName] || THEME_PALETTES[DEFAULT_THEME];
-  const colors = resolvedMode === 'dark' ? palette.dark : palette.light;
+  const palette =
+    THEME_PALETTES[themeName] || THEME_PALETTES[DEFAULT_THEME];
 
-  // Apply CSS variables and attributes to :root and html element
+  const colors =
+    resolvedMode === 'dark' ? palette.dark : palette.light;
+
   useEffect(() => {
     const root = document.documentElement;
 
     root.setAttribute('data-theme', themeName);
     root.setAttribute('data-mode', resolvedMode);
 
-    // Apply global design tokens (Requested in Section 7)
-    root.style.setProperty('--background', colors.background);
-    root.style.setProperty('--surface', colors.surface);
-    root.style.setProperty('--surface-elevated', colors.surfaceElevated);
-    root.style.setProperty('--surface-subtle', colors.surfaceSubtle);
-    root.style.setProperty('--text-primary', colors.textPrimary);
-    root.style.setProperty('--text-secondary', colors.textSecondary);
-    root.style.setProperty('--text-muted', colors.textMuted);
-    root.style.setProperty('--border', colors.border);
-    root.style.setProperty('--border-subtle', colors.borderSubtle);
-    root.style.setProperty('--accent', colors.accent);
-    root.style.setProperty('--accent-soft', colors.accentSoft);
-    root.style.setProperty('--accent-strong', colors.accentStrong);
-    root.style.setProperty('--button', colors.button);
-    root.style.setProperty('--button-text', colors.buttonText);
-    root.style.setProperty('--button-hover', colors.buttonHover);
-    root.style.setProperty('--highlight', colors.highlight);
-    root.style.setProperty('--success', colors.success);
-    root.style.setProperty('--warning', colors.warning);
-    root.style.setProperty('--danger', colors.danger);
-    root.style.setProperty('--ring', colors.ring);
+    const variables: Record<string, string> = {
+      '--background': colors.background,
+      '--surface': colors.surface,
+      '--surface-elevated': colors.surfaceElevated,
+      '--surface-subtle': colors.surfaceSubtle,
 
-    // Backward-compatibility aliases
-    root.style.setProperty('--lc-primary', colors.button);
-    root.style.setProperty('--lc-primary-hover', colors.buttonHover);
-    root.style.setProperty('--lc-secondary', colors.accent);
-    root.style.setProperty('--lc-background', colors.background);
-    root.style.setProperty('--lc-surface', colors.surface);
-    root.style.setProperty('--lc-surface-card', colors.surfaceElevated);
-    root.style.setProperty('--lc-surface-muted', colors.surfaceSubtle);
-    root.style.setProperty('--lc-text-primary', colors.textPrimary);
-    root.style.setProperty('--lc-text-secondary', colors.textSecondary);
-    root.style.setProperty('--lc-text-muted', colors.textMuted);
-    root.style.setProperty('--lc-border', colors.border);
-    root.style.setProperty('--lc-border-subtle', colors.borderSubtle);
-    root.style.setProperty('--lc-accent', colors.highlight);
-    root.style.setProperty('--lc-success', colors.success);
-    root.style.setProperty('--lc-warning', colors.warning);
-    root.style.setProperty('--lc-error', colors.danger);
-    root.style.setProperty('--lc-ring', colors.ring);
+      '--text-primary': colors.textPrimary,
+      '--text-secondary': colors.textSecondary,
+      '--text-muted': colors.textMuted,
 
-    // Update meta theme-color for mobile chrome & status bar
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
+      '--border': colors.border,
+      '--border-subtle': colors.borderSubtle,
+
+      '--accent': colors.accent,
+      '--accent-soft': colors.accentSoft,
+      '--accent-strong': colors.accentStrong,
+
+      '--button': colors.button,
+      '--button-text': colors.buttonText,
+      '--button-hover': colors.buttonHover,
+
+      '--highlight': colors.highlight,
+
+      '--success': colors.success,
+      '--warning': colors.warning,
+      '--danger': colors.danger,
+      '--ring': colors.ring,
+    };
+
+    Object.entries(variables).forEach(([property, value]) => {
+      root.style.setProperty(property, value);
+    });
+
+    // Legacy aliases retained for components that have not yet
+    // been migrated to the main token system.
+    const aliases: Record<string, string> = {
+      '--lc-primary': colors.button,
+      '--lc-primary-hover': colors.buttonHover,
+      '--lc-secondary': colors.accent,
+
+      '--lc-background': colors.background,
+      '--lc-surface': colors.surface,
+      '--lc-surface-card': colors.surfaceElevated,
+      '--lc-surface-muted': colors.surfaceSubtle,
+
+      '--lc-text-primary': colors.textPrimary,
+      '--lc-text-secondary': colors.textSecondary,
+      '--lc-text-muted': colors.textMuted,
+
+      '--lc-border': colors.border,
+      '--lc-border-subtle': colors.borderSubtle,
+
+      '--lc-accent': colors.highlight,
+
+      '--lc-success': colors.success,
+      '--lc-warning': colors.warning,
+      '--lc-error': colors.danger,
+      '--lc-ring': colors.ring,
+    };
+
+    Object.entries(aliases).forEach(([property, value]) => {
+      root.style.setProperty(property, value);
+    });
+
+    const metaTheme = document.querySelector(
+      'meta[name="theme-color"]'
+    );
+
     if (metaTheme) {
       metaTheme.setAttribute('content', colors.background);
     }
@@ -153,29 +207,32 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const setThemeName = (name: ThemeName) => {
     setThemeNameState(name);
+
     try {
       localStorage.setItem(THEME_STORAGE_KEY, name);
     } catch {
-      // storage disabled
+      // Storage may be unavailable.
     }
   };
 
   const setMode = (newMode: ThemeMode) => {
     setModeState(newMode);
+
     try {
       localStorage.setItem(MODE_STORAGE_KEY, newMode);
     } catch {
-      // storage disabled
+      // Storage may be unavailable.
     }
   };
 
   const completeLookSetup = () => {
     setHasCompletedLookSetup(true);
     setIsLookSetupOpen(false);
+
     try {
       localStorage.setItem(LOOK_SETUP_COMPLETED_KEY, 'true');
     } catch {
-      // storage disabled
+      // Storage may be unavailable.
     }
   };
 
@@ -187,23 +244,23 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setIsLookSetupOpen(false);
   };
 
+  const value = {
+    themeName,
+    mode,
+    resolvedMode,
+    colors,
+    setThemeName,
+    setMode,
+    availableThemes: THEME_PALETTES,
+    isLookSetupOpen,
+    hasCompletedLookSetup,
+    openLookSetup,
+    closeLookSetup,
+    completeLookSetup,
+  };
+
   return (
-    <ThemeContext.Provider
-      value={{
-        themeName,
-        mode,
-        resolvedMode,
-        colors,
-        setThemeName,
-        setMode,
-        availableThemes: THEME_PALETTES,
-        isLookSetupOpen,
-        hasCompletedLookSetup,
-        openLookSetup,
-        closeLookSetup,
-        completeLookSetup,
-      }}
-    >
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
@@ -211,8 +268,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
 export const useTheme = (): ThemeContextValue => {
   const context = useContext(ThemeContext);
+
   if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
+
   return context;
 };
