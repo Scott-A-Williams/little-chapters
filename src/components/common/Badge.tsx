@@ -1,56 +1,83 @@
 import React from 'react';
 
-export interface BadgeProps {
-  children: React.ReactNode;
-  color?: string;
-  variant?: 'subtle' | 'solid' | 'outline';
-  size?: 'sm' | 'md';
-  icon?: React.ReactNode;
-  style?: React.CSSProperties;
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'elevated' | 'muted' | 'accent' | 'flat';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+  interactive?: boolean;
 }
 
-export const Badge: React.FC<BadgeProps> = ({
+export const Card: React.FC<CardProps> = ({
   children,
-  color = 'var(--accent)',
-  variant = 'subtle',
-  size = 'md',
-  icon,
+  variant = 'default',
+  padding = 'md',
+  interactive = false,
+  className = '',
   style,
+  ...props
 }) => {
-  const isSubtle = variant === 'subtle';
+  const paddingStyles: Record<'none' | 'sm' | 'md' | 'lg', React.CSSProperties> = {
+    none: { padding: '0' },
+    sm: { padding: '12px 14px' },
+    md: { padding: '16px 18px' },
+    lg: { padding: '20px 22px' },
+  };
 
-  const sizeStyle: React.CSSProperties =
-    size === 'sm'
-      ? { padding: '2px 8px', fontSize: '0.74rem', borderRadius: 'var(--radius-sm)' }
-      : { padding: '3px 10px', fontSize: '0.8rem', borderRadius: 'var(--radius-sm)' };
+  const getVariantStyles = (): React.CSSProperties => {
+    switch (variant) {
+      case 'default':
+        return {
+          backgroundColor: 'var(--surface-elevated)',
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-sm)',
+        };
 
-  const variantStyle: React.CSSProperties = isSubtle
-    ? {
-        backgroundColor: `color-mix(in srgb, ${color} 14%, var(--surface))`,
-        color: color,
-        border: `1px solid color-mix(in srgb, ${color} 22%, transparent)`,
-      }
-    : {
-        backgroundColor: color,
-        color: 'var(--button-text)',
-      };
+      case 'elevated':
+        return {
+          backgroundColor: 'var(--surface-elevated)',
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-md)',
+        };
+
+      case 'muted':
+        return {
+          backgroundColor: 'var(--surface-subtle)',
+          border: '1px solid var(--border-subtle)',
+        };
+
+      case 'accent':
+        return {
+          backgroundColor: 'var(--accent-soft)',
+          border: '1px solid var(--accent)',
+          boxShadow: 'var(--shadow-sm)',
+        };
+
+      case 'flat':
+        return {
+          backgroundColor: 'transparent',
+          border: '1px solid var(--border)',
+          boxShadow: 'none',
+        };
+
+      default:
+        return {};
+    }
+  };
 
   return (
-    <span
+    <div
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '5px',
-        fontWeight: 500,
-        lineHeight: 1.25,
-        letterSpacing: '0.01em',
-        ...sizeStyle,
-        ...variantStyle,
+        borderRadius: 'var(--radius-lg)',
+        transition:
+          'border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease',
+        cursor: interactive ? 'pointer' : 'default',
+        ...paddingStyles[padding],
+        ...getVariantStyles(),
         ...style,
       }}
+      className={`lc-card ${interactive ? 'lc-card-interactive' : ''} ${className}`}
+      {...props}
     >
-      {icon && <span style={{ display: 'inline-flex', alignItems: 'center' }}>{icon}</span>}
       {children}
-    </span>
+    </div>
   );
 };
