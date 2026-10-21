@@ -103,29 +103,51 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.setAttribute('data-theme', themeName);
     root.setAttribute('data-mode', resolvedMode);
 
-    // Apply design tokens
-    root.style.setProperty('--lc-primary', colors.primary);
-    root.style.setProperty('--lc-primary-hover', colors.primaryHover);
-    root.style.setProperty('--lc-secondary', colors.secondary);
+    // Apply global design tokens (Requested in Section 7)
+    root.style.setProperty('--background', colors.background);
+    root.style.setProperty('--surface', colors.surface);
+    root.style.setProperty('--surface-elevated', colors.surfaceElevated);
+    root.style.setProperty('--surface-subtle', colors.surfaceSubtle);
+    root.style.setProperty('--text-primary', colors.textPrimary);
+    root.style.setProperty('--text-secondary', colors.textSecondary);
+    root.style.setProperty('--text-muted', colors.textMuted);
+    root.style.setProperty('--border', colors.border);
+    root.style.setProperty('--border-subtle', colors.borderSubtle);
+    root.style.setProperty('--accent', colors.accent);
+    root.style.setProperty('--accent-soft', colors.accentSoft);
+    root.style.setProperty('--accent-strong', colors.accentStrong);
+    root.style.setProperty('--button', colors.button);
+    root.style.setProperty('--button-text', colors.buttonText);
+    root.style.setProperty('--button-hover', colors.buttonHover);
+    root.style.setProperty('--highlight', colors.highlight);
+    root.style.setProperty('--success', colors.success);
+    root.style.setProperty('--warning', colors.warning);
+    root.style.setProperty('--danger', colors.danger);
+    root.style.setProperty('--ring', colors.ring);
+
+    // Backward-compatibility aliases
+    root.style.setProperty('--lc-primary', colors.button);
+    root.style.setProperty('--lc-primary-hover', colors.buttonHover);
+    root.style.setProperty('--lc-secondary', colors.accent);
     root.style.setProperty('--lc-background', colors.background);
     root.style.setProperty('--lc-surface', colors.surface);
-    root.style.setProperty('--lc-surface-card', colors.surfaceCard);
-    root.style.setProperty('--lc-surface-muted', colors.surfaceMuted);
+    root.style.setProperty('--lc-surface-card', colors.surfaceElevated);
+    root.style.setProperty('--lc-surface-muted', colors.surfaceSubtle);
     root.style.setProperty('--lc-text-primary', colors.textPrimary);
     root.style.setProperty('--lc-text-secondary', colors.textSecondary);
     root.style.setProperty('--lc-text-muted', colors.textMuted);
     root.style.setProperty('--lc-border', colors.border);
     root.style.setProperty('--lc-border-subtle', colors.borderSubtle);
-    root.style.setProperty('--lc-accent', colors.accent);
+    root.style.setProperty('--lc-accent', colors.highlight);
     root.style.setProperty('--lc-success', colors.success);
     root.style.setProperty('--lc-warning', colors.warning);
-    root.style.setProperty('--lc-error', colors.error);
+    root.style.setProperty('--lc-error', colors.danger);
     root.style.setProperty('--lc-ring', colors.ring);
 
     // Update meta theme-color for mobile chrome & status bar
     const metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) {
-      metaTheme.setAttribute('content', colors.primary);
+      metaTheme.setAttribute('content', colors.background);
     }
   }, [themeName, resolvedMode, colors]);
 

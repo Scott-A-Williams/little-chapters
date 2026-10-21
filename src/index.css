@@ -1,34 +1,74 @@
 @charset "UTF-8";
 
 /* ==========================================================================
-   Little Chapters - Global Design Tokens & Base Styles
+   Little Chapters - Central Design Tokens & Base Styles
    ========================================================================== */
 
 :root {
-  /* Typography scale */
-  --font-serif: 'Fraunces', Georgia, serif;
+  /* Typography Family Tokens */
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-serif: var(--font-heading);
 
-  /* Default Little Chapters Brand Values (Overwritten dynamically by ThemeContext) */
-  --lc-primary: #10263B;
-  --lc-primary-hover: #0B1C2C;
-  --lc-secondary: #009BC1;
-  --lc-background: #FDFBF9;
-  --lc-surface: #FFFFFF;
-  --lc-surface-card: #FFFFFF;
-  --lc-surface-muted: #F4EFEA;
-  --lc-text-primary: #10263B;
-  --lc-text-secondary: #4A5B6D;
-  --lc-text-muted: #7E8E9E;
-  --lc-border: #E8E2D9;
-  --lc-border-subtle: #F2ECE5;
-  --lc-accent: #E8B86D;
-  --lc-success: #2E7D52;
-  --lc-warning: #C97A1E;
-  --lc-error: #C84C44;
-  --lc-ring: rgba(0, 155, 193, 0.35);
+  /* Typography Scale Tokens */
+  --font-size-page-title: 1.85rem;   /* ~29-32px */
+  --font-size-section: 1.25rem;      /* ~20-22px */
+  --font-size-card-title: 1.05rem;   /* ~17-18px */
+  --font-size-body: 0.95rem;         /* ~15-16px */
+  --font-size-supporting: 0.86rem;   /* ~13.5-14px */
+  --font-size-label: 0.76rem;        /* ~12px */
 
-  /* Shadows */
+  /* Typographic Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* Line Heights */
+  --line-height-heading: 1.3;
+  --line-height-body: 1.55;
+
+  /* Global Color Tokens (Defaults, dynamically controlled by ThemeContext) */
+  --background: #12161C;
+  --surface: #181E26;
+  --surface-elevated: #1E2530;
+  --surface-subtle: #252D3A;
+  --text-primary: #EAEFF5;
+  --text-secondary: #9AA7B7;
+  --text-muted: #6C7989;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --accent: #7EA5C4;
+  --accent-soft: rgba(126, 165, 196, 0.14);
+  --accent-strong: #97BCDB;
+  --button: #7EA5C4;
+  --button-text: #0D151F;
+  --button-hover: #92B5D3;
+  --highlight: #AEC9E0;
+  --success: #62B487;
+  --warning: #DDA05A;
+  --danger: #DF706D;
+  --ring: rgba(126, 165, 196, 0.28);
+
+  /* Backward Compatibility Aliases */
+  --lc-primary: var(--button);
+  --lc-primary-hover: var(--button-hover);
+  --lc-secondary: var(--accent);
+  --lc-background: var(--background);
+  --lc-surface: var(--surface);
+  --lc-surface-card: var(--surface-elevated);
+  --lc-surface-muted: var(--surface-subtle);
+  --lc-text-primary: var(--text-primary);
+  --lc-text-secondary: var(--text-secondary);
+  --lc-text-muted: var(--text-muted);
+  --lc-border: var(--border);
+  --lc-border-subtle: var(--border-subtle);
+  --lc-accent: var(--highlight);
+  --lc-success: var(--success);
+  --lc-warning: var(--warning);
+  --lc-error: var(--danger);
+  --lc-ring: var(--ring);
+
+  /* Shadows (Light Mode default) */
   --shadow-sm: 0 1px 2px rgba(16, 38, 59, 0.04);
   --shadow-md: 0 4px 12px rgba(16, 38, 59, 0.07);
   --shadow-lg: 0 10px 28px rgba(16, 38, 59, 0.10);
@@ -38,7 +78,7 @@
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  --radius-xl: 28px;
+  --radius-xl: 26px;
   --radius-full: 9999px;
 
   /* Safe Area Insets for Mobile / Notch / Home Indicator */
@@ -46,6 +86,14 @@
   --sab: env(safe-area-inset-bottom, 0px);
   --sal: env(safe-area-inset-left, 0px);
   --sar: env(safe-area-inset-right, 0px);
+}
+
+/* Dark mode shadow refinement to avoid muddy halos */
+html[data-mode="dark"] {
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.32);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.42);
+  --shadow-bottom-nav: 0 -4px 22px rgba(0, 0, 0, 0.38);
 }
 
 /* Base reset */
@@ -58,23 +106,69 @@
 html, body {
   width: 100%;
   height: 100%;
-  background-color: var(--lc-background);
-  color: var(--lc-text-primary);
+  background-color: var(--background);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: var(--line-height-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.22s ease, color 0.22s ease;
 }
 
 #root {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+/* Typography Utility Classes */
+.lc-title-journal {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-page-title);
+  font-weight: 500;
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+
+.lc-title-section {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-section);
+  font-weight: 500;
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.lc-title-card {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-card-title);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.lc-text-body {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-secondary);
+}
+
+.lc-text-supporting {
+  font-size: var(--font-size-supporting);
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.lc-text-label {
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
 }
 
 /* Touch & Mobile UX Ergonomics */
@@ -98,14 +192,14 @@ input, textarea, select {
 
 /* Minimal Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--lc-border);
+  background: var(--border);
   border-radius: 999px;
 }
 
@@ -118,7 +212,7 @@ input, textarea, select {
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(24px) scale(0.98);
+    transform: translateY(18px) scale(0.985);
   }
   to {
     opacity: 1;
@@ -129,7 +223,7 @@ input, textarea, select {
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
   to {
     opacity: 1;
@@ -138,13 +232,13 @@ input, textarea, select {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-up {
-  animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUp 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: scaleIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

@@ -43,19 +43,19 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
     if (d.feeding) {
       const feed = d.feeding;
       return (
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '6px' }}>
+        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
           {feed.feedType === 'breast' && feed.breastSide && (
-            <Badge size="sm" color="#009BC1">
+            <Badge size="sm">
               Side: {feed.breastSide.toUpperCase()}
             </Badge>
           )}
           {feed.durationMinutes && (
-            <Badge size="sm" color="#009BC1">
+            <Badge size="sm">
               Duration: {feed.durationMinutes}m
             </Badge>
           )}
           {feed.amountMl && (
-            <Badge size="sm" color="#009BC1">
+            <Badge size="sm">
               {feed.amountMl} ml
             </Badge>
           )}
@@ -66,7 +66,7 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
     if (d.nappy) {
       return (
         <div style={{ marginTop: '6px' }}>
-          <Badge size="sm" color="#4E9F3D">
+          <Badge size="sm">
             Condition: {d.nappy.condition.toUpperCase()}
           </Badge>
         </div>
@@ -79,17 +79,19 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
           style={{
             marginTop: '8px',
             padding: '10px 14px',
-            backgroundColor: 'var(--lc-surface-muted)',
-            borderLeft: '3px solid var(--lc-accent)',
+            backgroundColor: 'var(--surface-subtle)',
+            borderLeft: '2.5px solid var(--accent)',
             borderRadius: '4px',
+            fontFamily: 'var(--font-heading)',
             fontStyle: 'italic',
-            fontSize: '0.95rem',
-            color: 'var(--lc-text-primary)',
+            fontSize: '1rem',
+            color: 'var(--text-primary)',
+            lineHeight: 1.45,
           }}
         >
           &ldquo;{d.quote.quoteText}&rdquo;
           {d.quote.context && (
-            <div style={{ fontSize: '0.78rem', color: 'var(--lc-text-muted)', marginTop: '4px' }}>
+            <div style={{ fontFamily: 'var(--font-sans)', fontStyle: 'normal', fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px' }}>
               — {d.quote.context}
             </div>
           )}
@@ -99,14 +101,14 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
 
     if (d.growth) {
       return (
-        <div style={{ display: 'flex', gap: '8px', marginTop: '6px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap' }}>
           {d.growth.weightKg && (
-            <Badge size="sm" color="#2A9D8F">
+            <Badge size="sm">
               Weight: {d.growth.weightKg} kg
             </Badge>
           )}
           {d.growth.heightCm && (
-            <Badge size="sm" color="#2A9D8F">
+            <Badge size="sm">
               Length: {d.growth.heightCm} cm
             </Badge>
           )}
@@ -130,8 +132,8 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Badge
-            color={meta?.color || 'var(--lc-secondary)'}
-            icon={<MomentCategoryIcon category={moment.category} size={14} color={meta?.color} />}
+            color={meta?.color || 'var(--accent)'}
+            icon={<MomentCategoryIcon category={moment.category} size={13} color={meta?.color} />}
           >
             {meta?.shortLabel || moment.category}
           </Badge>
@@ -140,8 +142,8 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
             <span
               style={{
                 fontSize: '0.78rem',
-                fontWeight: 600,
-                color: 'var(--lc-text-muted)',
+                fontWeight: 500,
+                color: 'var(--text-muted)',
               }}
             >
               • {childName}
@@ -156,7 +158,7 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
               alignItems: 'center',
               gap: '4px',
               fontSize: '0.78rem',
-              color: 'var(--lc-text-muted)',
+              color: 'var(--text-muted)',
             }}
           >
             <Clock size={12} />
@@ -172,14 +174,14 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
             title="Delete moment"
             aria-label="Delete moment"
             style={{
-              color: 'var(--lc-text-muted)',
+              color: 'var(--text-muted)',
               padding: '4px',
               borderRadius: 'var(--radius-sm)',
               display: 'flex',
               alignItems: 'center',
             }}
           >
-            <Trash2 size={14} />
+            <Trash2 size={13} />
           </button>
         </div>
       </div>
@@ -187,12 +189,12 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
       {/* Title */}
       <h4
         style={{
-          fontFamily: 'var(--font-serif)',
-          fontSize: '1.1rem',
+          fontFamily: 'var(--font-sans)',
+          fontSize: '1.05rem',
           fontWeight: 600,
-          color: 'var(--lc-text-primary)',
+          color: 'var(--text-primary)',
           lineHeight: 1.35,
-          marginBottom: moment.notes ? '6px' : '2px',
+          marginBottom: moment.notes ? '5px' : '2px',
         }}
       >
         {moment.title}
@@ -203,8 +205,8 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
         <p
           style={{
             fontSize: '0.92rem',
-            color: 'var(--lc-text-secondary)',
-            lineHeight: 1.45,
+            color: 'var(--text-secondary)',
+            lineHeight: 1.5,
             whiteSpace: 'pre-line',
           }}
         >
@@ -225,9 +227,10 @@ export const MomentCard: React.FC<MomentCardProps> = ({ moment, childName }) => 
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '3px',
-                fontSize: '0.75rem',
-                color: 'var(--lc-text-muted)',
-                backgroundColor: 'var(--lc-surface-muted)',
+                fontSize: '0.74rem',
+                color: 'var(--text-muted)',
+                backgroundColor: 'var(--surface-subtle)',
+                border: '1px solid var(--border-subtle)',
                 padding: '2px 8px',
                 borderRadius: 'var(--radius-sm)',
               }}

@@ -19,38 +19,37 @@ export const Card: React.FC<CardProps> = ({
     none: { padding: '0px' },
     sm: { padding: '12px 14px' },
     md: { padding: '16px 18px' },
-    lg: { padding: '22px 24px' },
+    lg: { padding: '20px 22px' },
   };
 
   const getVariantStyles = (): React.CSSProperties => {
     switch (variant) {
       case 'default':
         return {
-          backgroundColor: 'var(--lc-surface-card)',
-          border: '1px solid var(--lc-border)',
+          backgroundColor: 'var(--surface-elevated)',
+          border: '1px solid var(--border)',
           boxShadow: 'var(--shadow-sm)',
         };
       case 'elevated':
         return {
-          backgroundColor: 'var(--lc-surface-card)',
-          border: '1px solid var(--lc-border-subtle)',
+          backgroundColor: 'var(--surface-elevated)',
+          border: '1px solid var(--border)',
           boxShadow: 'var(--shadow-md)',
         };
       case 'muted':
         return {
-          backgroundColor: 'var(--lc-surface-muted)',
-          border: '1px solid var(--lc-border-subtle)',
+          backgroundColor: 'var(--surface-subtle)',
+          border: '1px solid var(--border-subtle)',
         };
       case 'accent':
         return {
-          backgroundColor: 'var(--lc-surface-card)',
-          border: '1.5px solid var(--lc-secondary)',
-          boxShadow: '0 4px 14px var(--lc-ring)',
+          backgroundColor: 'var(--surface-elevated)',
+          border: '1px solid var(--accent)',
         };
       case 'flat':
         return {
           backgroundColor: 'transparent',
-          border: '1px solid var(--lc-border)',
+          border: '1px solid var(--border)',
         };
       default:
         return {};
@@ -61,7 +60,7 @@ export const Card: React.FC<CardProps> = ({
     <div
       style={{
         borderRadius: 'var(--radius-lg)',
-        transition: 'transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease',
+        transition: 'border-color 0.16s ease, background-color 0.16s ease',
         cursor: interactive ? 'pointer' : 'default',
         ...paddingStyles[padding],
         ...getVariantStyles(),

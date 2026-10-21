@@ -63,13 +63,13 @@ export const Header: React.FC = () => {
           position: 'sticky',
           top: 0,
           zIndex: 100,
-          backgroundColor: 'var(--lc-background)',
-          borderBottom: '1px solid var(--lc-border-subtle)',
+          backgroundColor: 'var(--background)',
+          borderBottom: '1px solid var(--border-subtle)',
           paddingTop: 'calc(var(--sat) + 8px)',
           paddingBottom: '8px',
           paddingLeft: '16px',
           paddingRight: '16px',
-          transition: 'background-color 0.25s ease',
+          transition: 'background-color 0.22s ease',
         }}
       >
         <div
@@ -88,26 +88,26 @@ export const Header: React.FC = () => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '10px',
-                padding: '4px 8px 4px 4px',
+                gap: '8px',
+                padding: '4px 10px 4px 4px',
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--lc-surface)',
-                border: '1px solid var(--lc-border)',
+                backgroundColor: 'var(--surface)',
+                border: '1px solid var(--border)',
                 boxShadow: 'var(--shadow-sm)',
               }}
             >
               <div
                 style={{
-                  width: '34px',
-                  height: '34px',
+                  width: '32px',
+                  height: '32px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--lc-primary)',
-                  color: '#FFFFFF',
+                  backgroundColor: 'var(--accent-soft)',
+                  color: 'var(--accent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontWeight: 700,
-                  fontSize: '0.95rem',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
                 }}
               >
                 {activeChild ? activeChild.name[0] : 'L'}
@@ -116,19 +116,19 @@ export const Header: React.FC = () => {
               <div style={{ textAlign: 'left', marginRight: '2px' }}>
                 <div
                   style={{
-                    fontSize: '0.92rem',
-                    fontWeight: 700,
-                    color: 'var(--lc-text-primary)',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
+                    color: 'var(--text-primary)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px',
                   }}
                 >
                   <span>{activeChild ? activeChild.name : 'Select Child'}</span>
-                  <ChevronDown size={14} color="var(--lc-text-secondary)" />
+                  <ChevronDown size={13} color="var(--text-secondary)" />
                 </div>
                 {activeChild && (
-                  <div style={{ fontSize: '0.72rem', color: 'var(--lc-text-muted)' }}>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                     {calculateAge(activeChild.birthDate)}
                   </div>
                 )}
@@ -144,9 +144,9 @@ export const Header: React.FC = () => {
                   left: 0,
                   marginTop: '8px',
                   width: '240px',
-                  backgroundColor: 'var(--lc-surface)',
+                  backgroundColor: 'var(--surface-elevated)',
                   borderRadius: 'var(--radius-lg)',
-                  border: '1px solid var(--lc-border)',
+                  border: '1px solid var(--border)',
                   boxShadow: 'var(--shadow-lg)',
                   padding: '8px',
                   zIndex: 200,
@@ -155,11 +155,10 @@ export const Header: React.FC = () => {
               >
                 <div
                   style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.04em',
-                    color: 'var(--lc-text-muted)',
+                    fontSize: '0.72rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.03em',
+                    color: 'var(--text-muted)',
                     padding: '6px 10px',
                   }}
                 >
@@ -183,9 +182,9 @@ export const Header: React.FC = () => {
                         padding: '10px 12px',
                         borderRadius: 'var(--radius-md)',
                         backgroundColor: isSelected
-                          ? 'var(--lc-surface-muted)'
+                          ? 'var(--surface-subtle)'
                           : 'transparent',
-                        color: 'var(--lc-text-primary)',
+                        color: 'var(--text-primary)',
                         textAlign: 'left',
                         marginBottom: '4px',
                       }}
@@ -196,34 +195,34 @@ export const Header: React.FC = () => {
                             width: '26px',
                             height: '26px',
                             borderRadius: '50%',
-                            backgroundColor: 'var(--lc-secondary)',
-                            color: '#FFFFFF',
+                            backgroundColor: 'var(--accent-soft)',
+                            color: 'var(--accent)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontSize: '0.8rem',
-                            fontWeight: 700,
+                            fontWeight: 600,
                           }}
                         >
                           {child.name[0]}
                         </div>
                         <div>
-                          <div style={{ fontSize: '0.88rem', fontWeight: 600 }}>
+                          <div style={{ fontSize: '0.86rem', fontWeight: 600 }}>
                             {child.name}
                           </div>
-                          <div style={{ fontSize: '0.72rem', color: 'var(--lc-text-muted)' }}>
+                          <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                             {calculateAge(child.birthDate)}
                           </div>
                         </div>
                       </div>
-                      {isSelected && <Check size={16} color="var(--lc-secondary)" />}
+                      {isSelected && <Check size={15} color="var(--accent)" />}
                     </button>
                   );
                 })}
 
                 <div
                   style={{
-                    borderTop: '1px solid var(--lc-border-subtle)',
+                    borderTop: '1px solid var(--border-subtle)',
                     marginTop: '6px',
                     paddingTop: '6px',
                   }}
@@ -240,12 +239,12 @@ export const Header: React.FC = () => {
                       width: '100%',
                       padding: '8px 12px',
                       borderRadius: 'var(--radius-md)',
-                      color: 'var(--lc-secondary)',
-                      fontSize: '0.85rem',
-                      fontWeight: 600,
+                      color: 'var(--accent)',
+                      fontSize: '0.84rem',
+                      fontWeight: 500,
                     }}
                   >
-                    <Plus size={16} />
+                    <Plus size={15} />
                     <span>Add Another Child</span>
                   </button>
 
@@ -261,12 +260,12 @@ export const Header: React.FC = () => {
                       width: '100%',
                       padding: '8px 12px',
                       borderRadius: 'var(--radius-md)',
-                      color: 'var(--lc-text-secondary)',
-                      fontSize: '0.85rem',
-                      fontWeight: 600,
+                      color: 'var(--text-secondary)',
+                      fontSize: '0.84rem',
+                      fontWeight: 500,
                     }}
                   >
-                    <Palette size={16} />
+                    <Palette size={15} />
                     <span>Personalise Look...</span>
                   </button>
                 </div>
@@ -285,22 +284,22 @@ export const Header: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
-                padding: '6px 10px',
+                padding: '5px 10px',
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--lc-surface)',
-                border: '1px solid var(--lc-border)',
+                backgroundColor: 'var(--surface)',
+                border: '1px solid var(--border)',
                 boxShadow: 'var(--shadow-sm)',
                 fontSize: '0.76rem',
-                fontWeight: 600,
-                color: 'var(--lc-text-primary)',
+                fontWeight: 500,
+                color: 'var(--text-primary)',
               }}
             >
               <div
                 style={{
-                  width: '10px',
-                  height: '10px',
+                  width: '9px',
+                  height: '9px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--lc-primary)',
+                  backgroundColor: 'var(--accent)',
                 }}
               />
               <span>{currentTheme?.name.split('—')[0].trim()}</span>
@@ -310,10 +309,10 @@ export const Header: React.FC = () => {
             <div style={{ textAlign: 'right' }}>
               <div
                 style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontWeight: 600,
-                  fontSize: '1.02rem',
-                  color: 'var(--lc-primary)',
+                  fontFamily: 'var(--font-heading)',
+                  fontWeight: 500,
+                  fontSize: '1.08rem',
+                  color: 'var(--text-primary)',
                   letterSpacing: '-0.01em',
                   display: 'flex',
                   alignItems: 'center',
@@ -321,13 +320,13 @@ export const Header: React.FC = () => {
                 }}
               >
                 <span>Little Chapters</span>
-                <Sparkles size={12} color="var(--lc-secondary)" />
+                <Sparkles size={11} color="var(--accent)" />
               </div>
               <div
                 style={{
                   fontSize: '0.68rem',
-                  color: 'var(--lc-text-muted)',
-                  letterSpacing: '0.02em',
+                  color: 'var(--text-muted)',
+                  letterSpacing: '0.01em',
                 }}
               >
                 Family Journal
@@ -343,11 +342,12 @@ export const Header: React.FC = () => {
               maxWidth: '680px',
               margin: '8px auto 0',
               padding: '8px 14px',
-              backgroundColor: 'var(--lc-primary)',
-              color: '#FFFFFF',
+              backgroundColor: 'var(--surface-elevated)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border)',
               borderRadius: 'var(--radius-md)',
               fontSize: '0.84rem',
-              fontWeight: 600,
+              fontWeight: 500,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -356,7 +356,7 @@ export const Header: React.FC = () => {
             }}
             className="animate-slide-up"
           >
-            <Check size={14} color="var(--lc-secondary)" />
+            <Check size={14} color="var(--accent)" />
             <span>{feedbackMessage}</span>
           </div>
         )}
@@ -374,8 +374,8 @@ export const Header: React.FC = () => {
               style={{
                 display: 'block',
                 fontSize: '0.82rem',
-                fontWeight: 600,
-                color: 'var(--lc-text-secondary)',
+                fontWeight: 500,
+                color: 'var(--text-secondary)',
                 marginBottom: '6px',
               }}
             >
@@ -391,10 +391,10 @@ export const Header: React.FC = () => {
                 width: '100%',
                 padding: '10px 12px',
                 borderRadius: 'var(--radius-md)',
-                border: '1.5px solid var(--lc-border)',
-                backgroundColor: 'var(--lc-surface)',
-                color: 'var(--lc-text-primary)',
-                fontSize: '0.95rem',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--surface-elevated)',
+                color: 'var(--text-primary)',
+                fontSize: '0.94rem',
               }}
             />
           </div>
@@ -404,8 +404,8 @@ export const Header: React.FC = () => {
               style={{
                 display: 'block',
                 fontSize: '0.82rem',
-                fontWeight: 600,
-                color: 'var(--lc-text-secondary)',
+                fontWeight: 500,
+                color: 'var(--text-secondary)',
                 marginBottom: '6px',
               }}
             >
@@ -419,15 +419,15 @@ export const Header: React.FC = () => {
                 width: '100%',
                 padding: '10px 12px',
                 borderRadius: 'var(--radius-md)',
-                border: '1.5px solid var(--lc-border)',
-                backgroundColor: 'var(--lc-surface)',
-                color: 'var(--lc-text-primary)',
-                fontSize: '0.95rem',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--surface-elevated)',
+                color: 'var(--text-primary)',
+                fontSize: '0.94rem',
               }}
             />
           </div>
 
-          <Button type="submit" variant="primary" fullWidth size="md" icon={<UserPlus size={16} />}>
+          <Button type="submit" variant="primary" fullWidth size="md" icon={<UserPlus size={15} />}>
             Create Profile
           </Button>
         </form>

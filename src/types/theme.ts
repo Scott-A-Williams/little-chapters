@@ -1,25 +1,37 @@
-export type ThemeName = 'blue' | 'pink' | 'brown' | 'green';
+export type ThemeName = 'blue' | 'pink' | 'green' | 'brown';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 
 export interface ThemeColors {
-  primary: string;
-  primaryHover: string;
-  secondary: string;
+  // Global Design Tokens
   background: string;
   surface: string;
-  surfaceCard: string;
-  surfaceMuted: string;
+  surfaceElevated: string;
+  surfaceSubtle: string;
   textPrimary: string;
   textSecondary: string;
   textMuted: string;
   border: string;
   borderSubtle: string;
   accent: string;
+  accentSoft: string;
+  accentStrong: string;
+  button: string;
+  buttonText: string;
+  buttonHover: string;
+  highlight: string;
   success: string;
   warning: string;
-  error: string;
+  danger: string;
   ring: string;
+
+  // Backward-compatibility aliases for existing components
+  primary: string;
+  primaryHover: string;
+  secondary: string;
+  surfaceCard: string;
+  surfaceMuted: string;
+  error: string;
 }
 
 export interface PaletteDefinition {
@@ -28,10 +40,10 @@ export interface PaletteDefinition {
   subtitle: string;
   description: string;
   preview: {
-    primary: string;
-    secondary: string;
+    accent: string;
+    accentSoft: string;
     background: string;
-    surfaceCard: string;
+    surface: string;
     textPrimary: string;
   };
   light: ThemeColors;

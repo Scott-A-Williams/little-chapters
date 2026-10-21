@@ -23,9 +23,9 @@ export const Button: React.FC<ButtonProps> = ({
     alignItems: 'center',
     justifyContent: 'center',
     gap: '8px',
-    fontWeight: 600,
+    fontWeight: 500,
     borderRadius: 'var(--radius-md)',
-    transition: 'all 0.18s ease',
+    transition: 'all 0.16s ease',
     userSelect: 'none',
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.55 : 1,
@@ -36,18 +36,18 @@ export const Button: React.FC<ButtonProps> = ({
   const sizeStyles: Record<'sm' | 'md' | 'lg', React.CSSProperties> = {
     sm: {
       padding: '8px 14px',
-      fontSize: '0.875rem',
+      fontSize: '0.85rem',
       minHeight: '38px',
     },
     md: {
-      padding: '11px 20px',
-      fontSize: '0.975rem',
-      minHeight: '46px', // Mobile touch target friendly
+      padding: '10px 18px',
+      fontSize: '0.94rem',
+      minHeight: '44px', // Mobile touch target friendly
     },
     lg: {
-      padding: '14px 26px',
-      fontSize: '1.05rem',
-      minHeight: '52px',
+      padding: '13px 24px',
+      fontSize: '1rem',
+      minHeight: '50px',
       borderRadius: 'var(--radius-lg)',
     },
   };
@@ -56,37 +56,39 @@ export const Button: React.FC<ButtonProps> = ({
     switch (variant) {
       case 'primary':
         return {
-          backgroundColor: 'var(--lc-primary)',
-          color: '#FFFFFF',
+          backgroundColor: 'var(--button)',
+          color: 'var(--button-text)',
           boxShadow: 'var(--shadow-sm)',
+          fontWeight: 600,
         };
       case 'secondary':
         return {
-          backgroundColor: 'var(--lc-surface-muted)',
-          color: 'var(--lc-text-primary)',
-          border: '1px solid var(--lc-border)',
+          backgroundColor: 'var(--surface-subtle)',
+          color: 'var(--text-primary)',
+          border: '1px solid var(--border)',
         };
       case 'accent':
         return {
-          backgroundColor: 'var(--lc-secondary)',
-          color: '#FFFFFF',
-          boxShadow: '0 3px 10px color-mix(in srgb, var(--lc-secondary) 25%, transparent)',
+          backgroundColor: 'var(--accent)',
+          color: 'var(--button-text)',
+          boxShadow: 'var(--shadow-sm)',
+          fontWeight: 600,
         };
       case 'outline':
         return {
           backgroundColor: 'transparent',
-          color: 'var(--lc-primary)',
-          border: '1.5px solid var(--lc-primary)',
+          color: 'var(--accent)',
+          border: '1.5px solid var(--accent)',
         };
       case 'ghost':
         return {
           backgroundColor: 'transparent',
-          color: 'var(--lc-text-secondary)',
+          color: 'var(--text-secondary)',
         };
       case 'danger':
         return {
-          backgroundColor: 'rgba(200, 76, 68, 0.12)',
-          color: 'var(--lc-error)',
+          backgroundColor: 'color-mix(in srgb, var(--danger) 15%, transparent)',
+          color: 'var(--danger)',
         };
       default:
         return {};

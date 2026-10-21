@@ -47,7 +47,7 @@ export const ChooseLookModal: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '16px',
-        backgroundColor: 'rgba(16, 38, 59, 0.55)',
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
         backdropFilter: 'blur(4px)',
         WebkitBackdropFilter: 'blur(4px)',
       }}
@@ -57,12 +57,12 @@ export const ChooseLookModal: React.FC = () => {
         style={{
           position: 'relative',
           width: '100%',
-          maxWidth: '580px',
+          maxWidth: '560px',
           maxHeight: '92vh',
-          backgroundColor: 'var(--lc-surface)',
+          backgroundColor: 'var(--surface)',
           borderRadius: 'var(--radius-xl)',
-          boxShadow: '0 20px 40px rgba(16, 38, 59, 0.16)',
-          border: '1px solid var(--lc-border)',
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
+          border: '1px solid var(--border)',
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
@@ -73,8 +73,8 @@ export const ChooseLookModal: React.FC = () => {
         {/* Modal Header */}
         <div
           style={{
-            padding: '20px 24px 16px',
-            borderBottom: '1px solid var(--lc-border-subtle)',
+            padding: '20px 22px 16px',
+            borderBottom: '1px solid var(--border-subtle)',
             display: 'flex',
             alignItems: 'flex-start',
             justifyContent: 'space-between',
@@ -85,25 +85,23 @@ export const ChooseLookModal: React.FC = () => {
             <div
               style={{
                 fontSize: '0.78rem',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                color: 'var(--lc-secondary)',
+                fontWeight: 500,
+                color: 'var(--accent)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '5px',
-                marginBottom: '4px',
+                marginBottom: '3px',
               }}
             >
-              <Sparkles size={13} color="var(--lc-secondary)" />
-              Personalise Your Experience
+              <Sparkles size={13} color="var(--accent)" />
+              Personalise Your Look
             </div>
             <h2
               style={{
-                fontFamily: 'var(--font-serif)',
+                fontFamily: 'var(--font-heading)',
                 fontSize: '1.45rem',
-                fontWeight: 700,
-                color: 'var(--lc-text-primary)',
+                fontWeight: 500,
+                color: 'var(--text-primary)',
                 lineHeight: 1.25,
                 margin: 0,
               }}
@@ -112,8 +110,8 @@ export const ChooseLookModal: React.FC = () => {
             </h2>
             <p
               style={{
-                fontSize: '0.88rem',
-                color: 'var(--lc-text-secondary)',
+                fontSize: '0.86rem',
+                color: 'var(--text-secondary)',
                 marginTop: '4px',
                 lineHeight: 1.4,
               }}
@@ -126,31 +124,31 @@ export const ChooseLookModal: React.FC = () => {
             onClick={closeLookSetup}
             aria-label="Close"
             style={{
-              width: '36px',
-              height: '36px',
+              width: '34px',
+              height: '34px',
               borderRadius: '50%',
-              backgroundColor: 'var(--lc-surface-muted)',
-              color: 'var(--lc-text-secondary)',
+              backgroundColor: 'var(--surface-subtle)',
+              color: 'var(--text-secondary)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
             }}
           >
-            <X size={18} />
+            <X size={17} />
           </button>
         </div>
 
         {/* Scrollable Content */}
         <div
           style={{
-            padding: '20px 24px',
+            padding: '18px 22px',
             overflowY: 'auto',
             flex: 1,
             WebkitOverflowScrolling: 'touch',
             display: 'flex',
             flexDirection: 'column',
-            gap: '18px',
+            gap: '16px',
           }}
         >
           {/* Appearance Mode Preview Switcher */}
@@ -159,19 +157,19 @@ export const ChooseLookModal: React.FC = () => {
           </div>
 
           {/* Theme Visual Preview Cards Grid */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div
               style={{
                 fontSize: '0.82rem',
-                fontWeight: 600,
-                color: 'var(--lc-text-secondary)',
+                fontWeight: 500,
+                color: 'var(--text-secondary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}
             >
               <span>Colour Palette</span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--lc-text-muted)' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                 Tap card to preview live
               </span>
             </div>
@@ -197,19 +195,19 @@ export const ChooseLookModal: React.FC = () => {
         {/* Footer Actions */}
         <div
           style={{
-            padding: '16px 24px calc(var(--sab) + 16px) 24px',
-            borderTop: '1px solid var(--lc-border-subtle)',
-            backgroundColor: 'var(--lc-surface)',
+            padding: '14px 22px calc(var(--sab) + 14px) 22px',
+            borderTop: '1px solid var(--border-subtle)',
+            backgroundColor: 'var(--surface)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px',
+            gap: '8px',
           }}
         >
           <Button
             variant="primary"
             size="lg"
             fullWidth
-            icon={<Check size={18} />}
+            icon={<Check size={16} />}
             onClick={handleSaveAndContinue}
           >
             Save & Continue with {THEME_PALETTES[themeName]?.name.split('—')[0]}
@@ -220,7 +218,7 @@ export const ChooseLookModal: React.FC = () => {
             size="md"
             fullWidth
             onClick={handleKeepDefault}
-            style={{ color: 'var(--lc-text-muted)' }}
+            style={{ color: 'var(--text-muted)' }}
           >
             Keep Default (Blue — Calm)
           </Button>

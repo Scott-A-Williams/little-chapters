@@ -31,35 +31,36 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
         }
       }}
       style={{
-        borderRadius: 'var(--radius-xl)',
+        borderRadius: 'var(--radius-lg)',
         border: isSelected
-          ? `2.5px solid var(--lc-primary)`
-          : '1.5px solid var(--lc-border)',
-        backgroundColor: 'var(--lc-surface-card)',
+          ? `1.5px solid ${c.accent}`
+          : '1px solid var(--border)',
+        backgroundColor: isSelected
+          ? 'var(--surface-elevated)'
+          : 'var(--surface)',
         padding: '16px',
         cursor: 'pointer',
         boxShadow: isSelected
-          ? '0 6px 20px rgba(16, 38, 59, 0.12), 0 0 0 3px var(--lc-ring)'
+          ? '0 3px 12px rgba(0, 0, 0, 0.22)'
           : 'var(--shadow-sm)',
-        transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: 'border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         gap: '12px',
         textAlign: 'left',
       }}
-      className="lc-theme-card"
     >
-      {/* Top Title Bar */}
+      {/* Top Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span
               style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.15rem',
-                fontWeight: 700,
-                color: 'var(--lc-text-primary)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '1.02rem',
+                fontWeight: 600,
+                color: 'var(--text-primary)',
               }}
             >
               {palette.name}
@@ -68,14 +69,13 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
               <span
                 style={{
                   fontSize: '0.68rem',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.04em',
+                  fontWeight: 600,
+                  letterSpacing: '0.02em',
                   padding: '2px 7px',
                   borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--lc-surface-muted)',
-                  color: 'var(--lc-text-secondary)',
-                  border: '1px solid var(--lc-border)',
+                  backgroundColor: 'var(--surface-subtle)',
+                  color: 'var(--text-muted)',
+                  border: '1px solid var(--border-subtle)',
                 }}
               >
                 Default
@@ -85,8 +85,8 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
           <div
             style={{
               fontSize: '0.82rem',
-              fontWeight: 600,
-              color: 'var(--lc-text-secondary)',
+              fontWeight: 500,
+              color: 'var(--text-secondary)',
               marginTop: '1px',
             }}
           >
@@ -97,12 +97,12 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
         {/* Selected Checkmark Badge */}
         <div
           style={{
-            width: '28px',
-            height: '28px',
+            width: '26px',
+            height: '26px',
             borderRadius: '50%',
-            backgroundColor: isSelected ? 'var(--lc-primary)' : 'var(--lc-surface-muted)',
-            color: isSelected ? '#FFFFFF' : 'var(--lc-text-muted)',
-            border: isSelected ? 'none' : '1px solid var(--lc-border)',
+            backgroundColor: isSelected ? c.accent : 'var(--surface-subtle)',
+            color: isSelected ? c.buttonText : 'var(--text-muted)',
+            border: isSelected ? 'none' : '1px solid var(--border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -110,25 +110,24 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
             flexShrink: 0,
           }}
         >
-          {isSelected && <Check size={16} strokeWidth={3} />}
+          {isSelected && <Check size={14} strokeWidth={2.6} />}
         </div>
       </div>
 
-      {/* Realistic Mini Interface Mockup */}
+      {/* Realistic Mini Journal Page Mockup */}
       <div
         style={{
-          borderRadius: 'var(--radius-lg)',
+          borderRadius: 'var(--radius-md)',
           backgroundColor: c.background,
           border: `1px solid ${c.border}`,
-          padding: '12px',
+          padding: '12px 14px',
           display: 'flex',
           flexDirection: 'column',
           gap: '8px',
-          boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.04)',
           overflow: 'hidden',
         }}
       >
-        {/* Mini App Header */}
+        {/* Mini Journal Header */}
         <div
           style={{
             display: 'flex',
@@ -144,10 +143,10 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
                 width: '18px',
                 height: '18px',
                 borderRadius: '50%',
-                backgroundColor: c.primary,
-                color: '#FFFFFF',
-                fontSize: '0.62rem',
-                fontWeight: 700,
+                backgroundColor: c.accentSoft,
+                color: c.accent,
+                fontSize: '0.65rem',
+                fontWeight: 600,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -157,26 +156,25 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
             </div>
             <span
               style={{
-                fontSize: '0.74rem',
-                fontWeight: 700,
+                fontSize: '0.82rem',
+                fontWeight: 500,
                 color: c.textPrimary,
-                fontFamily: 'var(--font-serif)',
+                fontFamily: 'var(--font-heading)',
               }}
             >
-              Maya's Chapter
+              Maya's Little Chapter
             </span>
           </div>
-          <Sparkles size={11} color={c.secondary} />
+          <Sparkles size={11} color={c.accent} />
         </div>
 
-        {/* Mini Journal Card */}
+        {/* Mini Journal Entry Card */}
         <div
           style={{
-            backgroundColor: c.surfaceCard,
-            borderRadius: 'var(--radius-md)',
+            backgroundColor: c.surfaceElevated,
+            borderRadius: 'var(--radius-sm)',
             border: `1px solid ${c.border}`,
             padding: '8px 10px',
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.03)',
           }}
         >
           <div
@@ -184,30 +182,31 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '4px',
+              marginBottom: '3px',
             }}
           >
             <span
               style={{
                 fontSize: '0.64rem',
-                fontWeight: 700,
+                fontWeight: 600,
                 padding: '2px 6px',
                 borderRadius: '4px',
-                backgroundColor: `color-mix(in srgb, ${c.secondary} 15%, ${c.surface})`,
-                color: c.secondary,
+                backgroundColor: c.accentSoft,
+                color: c.accent,
               }}
             >
               Milestone
             </span>
-            <span style={{ fontSize: '0.62rem', color: c.textMuted }}>Today</span>
+            <span style={{ fontSize: '0.62rem', color: c.textMuted }}>Today at 10:15 AM</span>
           </div>
 
           <div
             style={{
-              fontSize: '0.78rem',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.8rem',
               fontWeight: 600,
               color: c.textPrimary,
-              lineHeight: 1.25,
+              lineHeight: 1.3,
             }}
           >
             First big smile at Grandma!
@@ -221,13 +220,14 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
+              lineHeight: 1.35,
             }}
           >
-            Lit up with joy during the bedtime song...
+            Lit up with joy during her morning lullaby...
           </div>
         </div>
 
-        {/* Mini Action Button & Rhythm Strip */}
+        {/* Action Button & Subtle Swatch */}
         <div
           style={{
             display: 'flex',
@@ -239,17 +239,14 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
         >
           <div
             style={{
-              flex: 1,
-              backgroundColor: c.primary,
-              color: '#FFFFFF',
+              backgroundColor: c.button,
+              color: c.buttonText,
               borderRadius: 'var(--radius-sm)',
-              padding: '5px 8px',
+              padding: '5px 10px',
               fontSize: '0.68rem',
               fontWeight: 600,
-              textAlign: 'center',
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              justifyContent: 'center',
               gap: '4px',
             }}
           >
@@ -257,33 +254,36 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
             <span>+ Capture Moment</span>
           </div>
 
-          <div style={{ display: 'flex', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ fontSize: '0.62rem', color: c.textMuted }}>Palette:</span>
             <div
               style={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                backgroundColor: c.primary,
-              }}
-              title="Primary"
-            />
-            <div
-              style={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                backgroundColor: c.secondary,
-              }}
-              title="Secondary Accent"
-            />
-            <div
-              style={{
-                width: '12px',
-                height: '12px',
+                width: '10px',
+                height: '10px',
                 borderRadius: '50%',
                 backgroundColor: c.accent,
               }}
-              title="Highlight Accent"
+              title="Accent"
+            />
+            <div
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: c.surfaceElevated,
+                border: `1px solid ${c.border}`,
+              }}
+              title="Surface"
+            />
+            <div
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: c.background,
+                border: `1px solid ${c.border}`,
+              }}
+              title="Background"
             />
           </div>
         </div>
@@ -293,7 +293,7 @@ export const ThemeVisualCard: React.FC<ThemeVisualCardProps> = ({
       <p
         style={{
           fontSize: '0.8rem',
-          color: 'var(--lc-text-secondary)',
+          color: 'var(--text-secondary)',
           lineHeight: 1.4,
           margin: 0,
         }}

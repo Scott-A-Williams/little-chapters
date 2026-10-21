@@ -37,44 +37,45 @@ export const SettingsView: React.FC = () => {
       <div style={{ marginBottom: '20px' }}>
         <h1
           style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '1.65rem',
-            fontWeight: 600,
-            color: 'var(--lc-text-primary)',
+            fontFamily: 'var(--font-heading)',
+            fontSize: '1.75rem',
+            fontWeight: 500,
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.015em',
             marginBottom: '4px',
           }}
         >
           Settings & Journal
         </h1>
-        <p style={{ fontSize: '0.88rem', color: 'var(--lc-text-secondary)' }}>
-          Themes, data export, profiles, and family preferences
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
+          Themes, appearance, family profiles, and backups
         </p>
       </div>
 
       {/* Child Profile Info */}
-      <Card variant="default" padding="md" style={{ marginBottom: '18px' }}>
+      <Card variant="default" padding="md" style={{ marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div
             style={{
-              width: '44px',
-              height: '44px',
+              width: '42px',
+              height: '42px',
               borderRadius: '50%',
-              backgroundColor: 'var(--lc-primary)',
-              color: '#FFFFFF',
+              backgroundColor: 'var(--accent-soft)',
+              color: 'var(--accent)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '1.2rem',
-              fontWeight: 700,
+              fontSize: '1.15rem',
+              fontWeight: 600,
             }}
           >
             {activeChild ? activeChild.name[0] : 'L'}
           </div>
           <div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--lc-text-primary)' }}>
+            <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
               {activeChild ? activeChild.name : 'No active child'}
             </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--lc-text-muted)' }}>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
               {activeChild?.birthDate
                 ? `Born ${new Date(activeChild.birthDate).toLocaleDateString([], {
                     month: 'long',
@@ -88,20 +89,20 @@ export const SettingsView: React.FC = () => {
       </Card>
 
       {/* Appearance & Themes */}
-      <Card variant="default" padding="lg" style={{ marginBottom: '18px' }}>
+      <Card variant="default" padding="lg" style={{ marginBottom: '16px' }}>
         <h3
           style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '1.15rem',
+            fontFamily: 'var(--font-sans)',
+            fontSize: '1.12rem',
             fontWeight: 600,
-            color: 'var(--lc-text-primary)',
-            marginBottom: '16px',
+            color: 'var(--text-primary)',
+            marginBottom: '14px',
           }}
         >
           Theme & Aesthetic
         </h3>
 
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '18px' }}>
           <ModeToggle />
         </div>
 
@@ -109,33 +110,34 @@ export const SettingsView: React.FC = () => {
       </Card>
 
       {/* Data Export & Backup */}
-      <Card variant="default" padding="lg" style={{ marginBottom: '18px' }}>
+      <Card variant="default" padding="lg" style={{ marginBottom: '16px' }}>
         <h3
           style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '1.15rem',
+            fontFamily: 'var(--font-sans)',
+            fontSize: '1.12rem',
             fontWeight: 600,
-            color: 'var(--lc-text-primary)',
-            marginBottom: '6px',
+            color: 'var(--text-primary)',
+            marginBottom: '4px',
           }}
         >
           Data Ownership & Backup
         </h3>
         <p
           style={{
-            fontSize: '0.86rem',
-            color: 'var(--lc-text-secondary)',
-            marginBottom: '16px',
+            fontSize: '0.85rem',
+            color: 'var(--text-secondary)',
+            marginBottom: '14px',
+            lineHeight: 1.45,
           }}
         >
           Your family memories are yours forever. Download clean spreadsheets or complete backups anytime.
         </p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <Button
             variant="secondary"
             fullWidth
-            icon={<FileSpreadsheet size={16} color="var(--lc-secondary)" />}
+            icon={<FileSpreadsheet size={15} color="var(--accent)" />}
             onClick={handleExportCSV}
           >
             Export All Moments to CSV
@@ -144,7 +146,7 @@ export const SettingsView: React.FC = () => {
           <Button
             variant="secondary"
             fullWidth
-            icon={<Download size={16} color="var(--lc-secondary)" />}
+            icon={<Download size={15} color="var(--accent)" />}
             onClick={handleExportJSON}
           >
             Download Full JSON Backup
@@ -152,18 +154,18 @@ export const SettingsView: React.FC = () => {
         </div>
       </Card>
 
-      {/* Cloud & Architecture Status */}
-      <Card variant="muted" padding="md" style={{ marginBottom: '18px' }}>
+      {/* Cloud & Storage Architecture */}
+      <Card variant="muted" padding="md" style={{ marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-          <ShieldCheck size={20} color="var(--lc-secondary)" style={{ marginTop: '2px' }} />
+          <ShieldCheck size={18} color="var(--accent)" style={{ marginTop: '2px' }} />
           <div>
-            <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--lc-text-primary)' }}>
+            <div style={{ fontSize: '0.86rem', fontWeight: 600, color: 'var(--text-primary)' }}>
               Cloud & Storage Architecture
             </div>
             <div
               style={{
                 fontSize: '0.8rem',
-                color: 'var(--lc-text-secondary)',
+                color: 'var(--text-secondary)',
                 marginTop: '2px',
                 lineHeight: 1.4,
               }}
@@ -174,18 +176,18 @@ export const SettingsView: React.FC = () => {
         </div>
       </Card>
 
-      {/* Mobile App & Future Store Packaging */}
-      <Card variant="default" padding="md" style={{ marginBottom: '18px' }}>
+      {/* Mobile App & Packaging Readiness */}
+      <Card variant="default" padding="md" style={{ marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-          <Smartphone size={20} color="var(--lc-secondary)" style={{ marginTop: '2px' }} />
+          <Smartphone size={18} color="var(--accent)" style={{ marginTop: '2px' }} />
           <div>
-            <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--lc-text-primary)' }}>
+            <div style={{ fontSize: '0.86rem', fontWeight: 600, color: 'var(--text-primary)' }}>
               App Store & PWA Readiness
             </div>
             <div
               style={{
                 fontSize: '0.8rem',
-                color: 'var(--lc-text-secondary)',
+                color: 'var(--text-secondary)',
                 marginTop: '2px',
                 lineHeight: 1.4,
               }}
@@ -201,8 +203,8 @@ export const SettingsView: React.FC = () => {
         <div
           style={{
             fontSize: '0.82rem',
-            color: 'var(--lc-text-muted)',
-            marginBottom: '10px',
+            color: 'var(--text-muted)',
+            marginBottom: '8px',
           }}
         >
           Testing with parent cohorts? You can restore sample moments anytime.
@@ -210,7 +212,7 @@ export const SettingsView: React.FC = () => {
         <Button
           variant="ghost"
           size="sm"
-          icon={<RotateCcw size={14} />}
+          icon={<RotateCcw size={13} />}
           onClick={() => {
             if (window.confirm('Reset journal to sample demo moments?')) {
               resetDemoData();
@@ -225,9 +227,9 @@ export const SettingsView: React.FC = () => {
       <div
         style={{
           textAlign: 'center',
-          marginTop: '24px',
-          fontSize: '0.75rem',
-          color: 'var(--lc-text-muted)',
+          marginTop: '20px',
+          fontSize: '0.74rem',
+          color: 'var(--text-muted)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

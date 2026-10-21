@@ -21,22 +21,22 @@ export const DashboardView: React.FC = () => {
       <div style={{ marginBottom: '18px' }}>
         <span
           style={{
-            fontSize: '0.8rem',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            color: 'var(--lc-secondary)',
+            fontSize: '0.84rem',
+            fontWeight: 500,
+            color: 'var(--accent)',
+            letterSpacing: '0.01em',
           }}
         >
           {getGreeting()}
         </span>
         <h1
           style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '1.65rem',
-            fontWeight: 600,
-            color: 'var(--lc-text-primary)',
-            lineHeight: 1.25,
+            fontFamily: 'var(--font-heading)',
+            fontSize: '1.75rem',
+            fontWeight: 500,
+            color: 'var(--text-primary)',
+            lineHeight: 1.28,
+            letterSpacing: '-0.015em',
             marginTop: '2px',
           }}
         >

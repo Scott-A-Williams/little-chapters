@@ -25,19 +25,19 @@ export const JourneyView: React.FC = () => {
       title: 'Chapter 1: The Arrival & Fourth Trimester',
       subtitle: '0 to 3 months',
       description: 'First cuddles, newborn days, sleepless nights, and the first social smiles.',
-      color: '#009BC1',
+      isCurrent: true,
     },
     {
       title: 'Chapter 2: Wonder & Discoveries',
       subtitle: '3 to 6 months',
       description: 'Rolling over, babbling, giggling, and reaching out for the world.',
-      color: '#D4A373',
+      isCurrent: false,
     },
     {
       title: 'Chapter 3: Little Explorer & First Tastes',
       subtitle: '6 to 12 months',
       description: 'Weaning adventures, sitting tall, crawling, and finding their voice.',
-      color: '#4E9F3D',
+      isCurrent: false,
     },
   ];
 
@@ -46,16 +46,17 @@ export const JourneyView: React.FC = () => {
       <div style={{ marginBottom: '16px' }}>
         <h1
           style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '1.65rem',
-            fontWeight: 600,
-            color: 'var(--lc-text-primary)',
+            fontFamily: 'var(--font-heading)',
+            fontSize: '1.75rem',
+            fontWeight: 500,
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.015em',
             marginBottom: '4px',
           }}
         >
           {activeChild ? `${activeChild.name}'s Journey` : 'Journey'}
         </h1>
-        <p style={{ fontSize: '0.88rem', color: 'var(--lc-text-secondary)' }}>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
           Chapters of growth, unforgettable firsts, and precious milestones
         </p>
       </div>
@@ -72,31 +73,31 @@ export const JourneyView: React.FC = () => {
         >
           <h3
             style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: '1.1rem',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '1.15rem',
               fontWeight: 600,
-              color: 'var(--lc-text-primary)',
+              color: 'var(--text-primary)',
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
             }}
           >
-            <BookOpen size={18} color="var(--lc-primary)" />
+            <BookOpen size={16} color="var(--accent)" />
             Little Chapters
           </h3>
-          <Badge size="sm" color="var(--lc-primary)">
+          <Badge size="sm">
             Automatic
           </Badge>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {suggestedChapters.map((ch, idx) => (
+          {suggestedChapters.map((ch) => (
             <Card
               key={ch.title}
               variant="default"
               padding="md"
               style={{
-                borderLeft: `4px solid ${ch.color}`,
+                borderLeft: ch.isCurrent ? '3px solid var(--accent)' : '1px solid var(--border)',
               }}
             >
               <div
@@ -110,32 +111,30 @@ export const JourneyView: React.FC = () => {
                 <span
                   style={{
                     fontSize: '0.74rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.04em',
-                    color: ch.color,
+                    fontWeight: 600,
+                    color: 'var(--accent)',
                   }}
                 >
                   {ch.subtitle}
                 </span>
-                {idx === 0 && (
-                  <Badge size="sm" color={ch.color}>
+                {ch.isCurrent && (
+                  <Badge size="sm">
                     Current Chapter
                   </Badge>
                 )}
               </div>
               <h4
                 style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: '1.05rem',
-                  fontWeight: 600,
-                  color: 'var(--lc-text-primary)',
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: '1.1rem',
+                  fontWeight: 500,
+                  color: 'var(--text-primary)',
                   marginBottom: '4px',
                 }}
               >
                 {ch.title}
               </h4>
-              <p style={{ fontSize: '0.85rem', color: 'var(--lc-text-secondary)' }}>
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
                 {ch.description}
               </p>
             </Card>
@@ -156,19 +155,19 @@ export const JourneyView: React.FC = () => {
           <div>
             <h3
               style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.1rem',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '1.15rem',
                 fontWeight: 600,
-                color: 'var(--lc-text-primary)',
+                color: 'var(--text-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
               }}
             >
-              <Award size={18} color="#D4A373" />
+              <Award size={16} color="var(--accent)" />
               Milestones & Firsts
             </h3>
-            <span style={{ fontSize: '0.78rem', color: 'var(--lc-text-muted)' }}>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
               {milestoneMoments.length} recorded
             </span>
           </div>
@@ -185,12 +184,13 @@ export const JourneyView: React.FC = () => {
 
         {milestoneMoments.length === 0 ? (
           <Card variant="muted" padding="lg" style={{ textAlign: 'center' }}>
-            <Sparkles size={28} color="var(--lc-secondary)" style={{ margin: '0 auto 8px' }} />
+            <Sparkles size={24} color="var(--accent)" style={{ margin: '0 auto 8px' }} />
             <h4
               style={{
-                fontFamily: 'var(--font-serif)',
+                fontFamily: 'var(--font-heading)',
                 fontSize: '1.05rem',
-                fontWeight: 600,
+                fontWeight: 500,
+                color: 'var(--text-primary)',
                 marginBottom: '4px',
               }}
             >
@@ -199,9 +199,10 @@ export const JourneyView: React.FC = () => {
             <p
               style={{
                 fontSize: '0.85rem',
-                color: 'var(--lc-text-secondary)',
+                color: 'var(--text-secondary)',
                 maxWidth: '280px',
                 margin: '0 auto 14px',
+                lineHeight: 1.45,
               }}
             >
               Record their first smile, roll, tooth, or steps to look back on forever.
@@ -209,7 +210,7 @@ export const JourneyView: React.FC = () => {
             <Button
               size="md"
               variant="primary"
-              icon={<Heart size={16} />}
+              icon={<Heart size={15} />}
               onClick={() => openQuickLog('milestone')}
             >
               Record First Milestone
