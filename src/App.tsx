@@ -12,9 +12,11 @@ import { ChildSetup } from './components/onboarding/ChildSetup';
 
 const AppContent: React.FC = () => {
   const { children, loading } = useChild();
+
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
 
-  // Wait until we know whether the user has a child set up.
+  // Wait for the child data to load before deciding
+  // whether to show onboarding or the main application.
   if (loading) {
     return (
       <div
@@ -23,8 +25,9 @@ const AppContent: React.FC = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'var(--background)',
-          color: 'var(--text-primary)',
+          background: 'var(--lc-background)',
+          color: 'var(--lc-text-muted)',
+          fontFamily: 'var(--font-body)',
         }}
       >
         Loading…
@@ -32,7 +35,8 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // First-time users need to create their child before seeing the journal.
+  // New user: no children exist yet.
+  // Show the child setup screen instead of the dashboard.
   if (children.length === 0) {
     return <ChildSetup />;
   }
@@ -41,12 +45,16 @@ const AppContent: React.FC = () => {
     switch (activeTab) {
       case 'dashboard':
         return <DashboardView />;
+
       case 'journey':
         return <JourneyView />;
+
       case 'timeline':
         return <TimelineView />;
+
       case 'settings':
         return <SettingsView />;
+
       default:
         return <DashboardView />;
     }
