@@ -24,6 +24,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     } else {
       document.body.style.overflow = '';
     }
+
     return () => {
       document.body.style.overflow = '';
     };
@@ -46,26 +47,33 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
       {/* Backdrop */}
       <div
         onClick={onClose}
+        aria-hidden="true"
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundColor: 'rgba(16, 38, 59, 0.45)',
-          backdropFilter: 'blur(3px)',
-          WebkitBackdropFilter: 'blur(3px)',
+          backgroundColor: 'rgba(0, 0, 0, 0.42)',
+          backdropFilter: 'blur(4px)',
+          WebkitBackdropFilter: 'blur(4px)',
         }}
       />
 
-      {/* Sheet Sheet Content */}
+      {/* Sheet */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? 'bottom-sheet-title' : undefined}
         style={{
           position: 'relative',
           width: '100%',
           maxWidth: '520px',
           margin: '0 auto',
           maxHeight,
-          backgroundColor: 'var(--lc-surface)',
+          backgroundColor: 'var(--surface)',
+          color: 'var(--text-primary)',
           borderTopLeftRadius: 'var(--radius-xl)',
           borderTopRightRadius: 'var(--radius-xl)',
+          border: '1px solid var(--border)',
+          borderBottom: 'none',
           boxShadow: 'var(--shadow-lg)',
           display: 'flex',
           flexDirection: 'column',
@@ -75,7 +83,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
         }}
         className="animate-slide-up"
       >
-        {/* Grabber handle */}
+        {/* Grabber */}
         <div
           style={{
             display: 'flex',
@@ -88,8 +96,8 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
             style={{
               width: '40px',
               height: '4px',
-              borderRadius: '99px',
-              backgroundColor: 'var(--lc-border)',
+              borderRadius: 'var(--radius-full)',
+              backgroundColor: 'var(--border)',
             }}
           />
         </div>
@@ -100,30 +108,36 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            gap: '16px',
             padding: '10px 20px 14px',
-            borderBottom: '1px solid var(--lc-border-subtle)',
+            borderBottom: '1px solid var(--border-subtle)',
           }}
         >
-          <div>
+          <div style={{ minWidth: 0 }}>
             {title && (
               <h2
+                id="bottom-sheet-title"
                 style={{
-                  fontFamily: 'var(--font-serif)',
+                  fontFamily: 'var(--font-heading)',
                   fontSize: '1.25rem',
-                  fontWeight: 600,
-                  color: 'var(--lc-text-primary)',
+                  fontWeight: 500,
+                  lineHeight: 1.3,
+                  letterSpacing: '-0.01em',
+                  color: 'var(--text-primary)',
                   margin: 0,
                 }}
               >
                 {title}
               </h2>
             )}
+
             {subtitle && (
               <p
                 style={{
                   fontSize: '0.85rem',
-                  color: 'var(--lc-text-secondary)',
-                  margin: '2px 0 0',
+                  lineHeight: 1.45,
+                  color: 'var(--text-secondary)',
+                  margin: '3px 0 0',
                 }}
               >
                 {subtitle}
@@ -133,16 +147,19 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
 
           <button
             onClick={onClose}
+            type="button"
             aria-label="Close"
             style={{
+              flexShrink: 0,
               width: '36px',
               height: '36px',
-              borderRadius: '50%',
+              borderRadius: 'var(--radius-full)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: 'var(--lc-surface-muted)',
-              color: 'var(--lc-text-secondary)',
+              backgroundColor: 'var(--surface-subtle)',
+              color: 'var(--text-secondary)',
+              transition: 'background-color 0.16s ease, color 0.16s ease',
             }}
           >
             <X size={18} />
