@@ -10,6 +10,8 @@ export class ChildService {
       CHILDREN_STORAGE_KEY
     );
 
+    // No seeded/default children.
+    // A new user should see the child setup screen.
     return stored || [];
   }
 
@@ -23,19 +25,20 @@ export class ChildService {
     const children = await this.getChildren();
     const index = children.findIndex((item) => item.id === child.id);
 
+    const now = new Date().toISOString();
+
+    const savedChild: Child = {
+      ...child,
+      createdAt: child.createdAt || now,
+      updatedAt: now,
+    };
+
     const updated = [...children];
 
     if (index >= 0) {
-      updated[index] = {
-        ...child,
-        updatedAt: new Date().toISOString(),
-      };
+      updated[index] = savedChild;
     } else {
-      updated.push({
-        ...child,
-        createdAt: child.createdAt || new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
+      updated.push(savedChild);
     }
 
     await localStorageAdapter.setItem(
@@ -43,7 +46,7 @@ export class ChildService {
       updated
     );
 
-    return child;
+    return savedChild;
   }
 
   async deleteChild(id: string): Promise<void> {
@@ -76,11 +79,7 @@ export class ChildService {
         ACTIVE_CHILD_STORAGE_KEY
       );
 
-    if (active) {
-      return active;
-    }
-
-    return '';
+    return active || '';
   }
 
   async setActiveChildId(id: string): Promise<void> {
